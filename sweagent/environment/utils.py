@@ -23,7 +23,7 @@ LOGGER_NAME = "intercode"
 START_UP_DELAY = 5
 TIMEOUT_DURATION = 25
 GITHUB_ISSUE_URL_PATTERN = re.compile(r'github\.com\/(.*?)\/(.*?)\/issues\/(\d+)')
-
+BITBUCKET_ISSUE_URL_PATTERN = re.compile(r'bitbucket\.org\/(.*?)\/(.*?)\/issues\/(\d+)')
 logger = logging.getLogger(LOGGER_NAME)
 
 
@@ -39,7 +39,15 @@ def get_data_path_name(data_path: str):
 
 def is_from_github_url(data_path: str):
     return GITHUB_ISSUE_URL_PATTERN.search(data_path) is not None
+def is_from_bitbucket_url(data_path: str):
+    return BITBUCKET_ISSUE_URL_PATTERN.search(data_path) is not None
 
+def parse_bitbucket_issue_url(data_path: str):
+    match = BITBUCKET_ISSUE_URL_PATTERN.search(data_path)
+    if match:
+        owner, repo, issue_number = match.groups()
+        return owner, repo, issue_number
+    return None, None, None
 
 def copy_file_to_container(container, contents, container_path):
     """

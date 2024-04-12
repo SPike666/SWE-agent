@@ -72,6 +72,17 @@ docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock \
   --config_file config/default_from_url.yaml  --skip_existing=False
 ```
 
+```bash
+docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock \
+  -v keys.cfg:/app/keys.cfg \
+  --platform=linux/amd64 \
+  sweagent/swe-agent-run:latest \
+  python run.py --image_name=sweagent/swe-agent:latest \
+  --model_name gpt4 \
+  --data_path https://github.com/pvlib/pvlib-python/issues/1603 \
+  --config_file config/default_from_url.yaml  --skip_existing=False
+```
+
 > [!TIP]
 > * For more information on the different API keys/tokens, see [below](#-add-your-api-keystokens).
 > * If you're using docker on Windows, use `-v //var/run/docker.sock:/var/run/docker.sock`
