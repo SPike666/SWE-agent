@@ -466,3 +466,42 @@ def format_trajectory_markdown(trajectory: List[Dict[str, str]]):
         "</details>",
     ] 
     return "\n".join(prefix) + "\n\n---\n\n".join(steps) + "\n".join(suffix)
+def process_svn_url(svn_type: str, url: str, *args, **kwargs):
+    """
+    Process an SVN URL based on the specified SVN type (GitHub or Bitbucket).
+
+    Args:
+        svn_type (str): The type of SVN ('github' or 'bitbucket').
+        url (str): The SVN URL to process.
+        *args: Additional positional arguments.
+        **kwargs: Additional keyword arguments.
+
+    Returns:
+        The result of processing the SVN URL.
+    """
+    if svn_type.lower() == 'github':
+        # Use existing GitHub processing functions
+        owner, repo, issue_number = parse_gh_issue_url(url)
+        return get_gh_issue_data(url, *args, **kwargs)
+    elif svn_type.lower() == 'bitbucket':
+        # Placeholder for Bitbucket processing
+        return process_bitbucket_url(url, *args, **kwargs)
+    else:
+        raise ValueError(f"Unsupported SVN type: {svn_type}")
+
+# Placeholder for the Bitbucket URL processing function
+def process_bitbucket_url(url: str, *args, **kwargs):
+    """
+    Process a Bitbucket URL (placeholder function).
+
+    Args:
+        url (str): The Bitbucket URL to process.
+        *args: Additional positional arguments.
+        **kwargs: Additional keyword arguments.
+
+    Returns:
+        The result of processing the Bitbucket URL.
+    """
+    # TODO: Implement Bitbucket URL processing
+    pass
+
